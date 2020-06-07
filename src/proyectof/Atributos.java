@@ -18,7 +18,10 @@ public class Atributos {
         this.Atributo = Atributo;
         this.TipoDato = TipoDato;
         this.Longitud = Longitud;
-        this.id=id;
+    }
+
+    Atributos(int id) {
+       this.id=id;
     }
 
     public int getId() {
