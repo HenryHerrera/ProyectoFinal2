@@ -17,36 +17,22 @@ import javax.swing.table.DefaultTableModel;
  * @author HENRY HERRERA
  */
 public class JFrameBase extends javax.swing.JFrame {
-
-    //Variables para Borrar matriz
-    String Entidad;
-    String Atributo;
-    String TipoDato;
-    String Longitud;
-    
-    ArrayList<Atributos> lista=new ArrayList<Atributos>();
-   
+        
+        DefaultTableModel model = new DefaultTableModel();
+        
     
     public JFrameBase() {
-        initComponents();
-    jTableBase.addMouseListener (new MouseAdapter(){
-        DefaultTableModel model = new DefaultTableModel();
-        public void mouseClicked(MouseEvent e){
-            int i = jTableBase.getSelectedRow();
-            Entidad =(jTableBase.getValueAt(i, 1).toString());
-            Atributo =(jTableBase.getValueAt(i, 2).toString());
-            TipoDato =(jTableBase.getValueAt(i, 3).toString());
-            Longitud =(jTableBase.getValueAt(i, 4).toString());
-        }
-        
-    });
-    
-    
+        initComponents(); 
+        //Creacion de Columnas para la Tabla
+        model.addColumn("Id");
+        model.addColumn("Entidad");
+        model.addColumn("Atributo");
+        model.addColumn("Tipo de Dato");
+        model.addColumn("Longitud");
+        this.tableDatos.setModel(model); 
     
     
     }
-    
-   
     
     public int getSumaAscii(String linea) {
 		int total = 0;
@@ -61,8 +47,8 @@ public class JFrameBase extends javax.swing.JFrame {
 
 	private boolean verificarColosion(int id) {
 		boolean existe = false;
-		for (int i = 0; i < jTableBase.getRowCount(); i++) {
-			String valor = jTableBase.getValueAt(i, 0).toString();
+		for (int i = 0; i < tableDatos.getRowCount(); i++) {
+			String valor = tableDatos.getValueAt(i, 0).toString();
 			if (id == Integer.parseInt(valor)) {
 				existe = true;
 				break;
@@ -93,9 +79,12 @@ public class JFrameBase extends javax.swing.JFrame {
         btnEliminarBase = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         btnModificar = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        datos = new javax.swing.JComboBox<>();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tableDatos = new javax.swing.JTable();
+        btnSalir = new javax.swing.JButton();
+        jblId = new javax.swing.JLabel();
+        txtId = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -122,6 +111,11 @@ public class JFrameBase extends javax.swing.JFrame {
         });
 
         btnEliminarBase.setText("Eliminar Base");
+        btnEliminarBase.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarBaseActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 2, 18)); // NOI18N
         jLabel1.setText("      BASE DE DATOS");
@@ -133,9 +127,9 @@ public class JFrameBase extends javax.swing.JFrame {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar Dato.", "INT", "LONG", "STRING", "DOUBLE", "FLOAT", "DATE", "CHAR" }));
+        datos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar Dato.", "INT", "LONG", "STRING", "DOUBLE", "FLOAT", "DATE", "CHAR" }));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tableDatos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -146,8 +140,22 @@ public class JFrameBase extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4", "Title 5"
             }
         ));
-        jTable1.setRowHeight(30);
-        jScrollPane2.setViewportView(jTable1);
+        tableDatos.setRowHeight(30);
+        tableDatos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableDatosMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(tableDatos);
+
+        btnSalir.setText("Salir");
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
+
+        jblId.setText("Identificador:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -157,28 +165,32 @@ public class JFrameBase extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jbnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jlbLongitud, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtLongitud, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(35, 35, 35)
                         .addComponent(btnEliminarBase, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(205, 205, 205))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(txtAtributo, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jlbEntidad, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jlbTipoDato, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jlbAtributo, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGap(23, 23, 23)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(txtEntidad, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(txtLongitud, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addComponent(jlbLongitud, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(144, 144, 144)
+                                .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(38, 38, 38))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jlbTipoDato, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jlbAtributo, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jlbEntidad, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jblId, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtEntidad, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
+                                    .addComponent(txtAtributo)
+                                    .addComponent(datos, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtId))))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(37, 37, 37)
@@ -186,7 +198,12 @@ public class JFrameBase extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(204, 204, 204)
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(134, Short.MAX_VALUE))))
+                        .addContainerGap(120, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jbnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(291, 291, 291))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -195,24 +212,25 @@ public class JFrameBase extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jblId))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jlbEntidad)
                             .addComponent(txtEntidad, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                        .addGap(23, 23, 23)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jlbAtributo)
                             .addComponent(txtAtributo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                        .addGap(20, 20, 20)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jlbTipoDato, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(24, 24, 24)
+                            .addComponent(datos, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jlbLongitud)
                             .addComponent(txtLongitud, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(34, 34, 34)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jbnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(22, 22, 22))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -221,55 +239,78 @@ public class JFrameBase extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnEliminarBase, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(402, 402, 402))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jbnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(43, 43, 43))))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnAgregarActionPerformed
-  
+                //Creacion de Arreglo boton agregar
         int id = getSumaAscii(txtEntidad.getText().trim());
         if(verificarColosion(id)){
             JOptionPane.showMessageDialog(null,"La Entidad ya existe","Informacion Duplicada", JOptionPane.ERROR_MESSAGE);
-        
         }
-        
+            String []agregar=new String[5];
+            agregar[0]=txtId.getText();
+            agregar[1]=txtEntidad.getText();
+            agregar[2]=txtAtributo.getText();
+            agregar[3]=(String)datos.getSelectedItem();
+            agregar[4]=txtLongitud.getText();
+            model.addRow(agregar);
+            
+            txtId.setText("");
+            txtEntidad.setText("");
+            txtAtributo.setText("");
+            txtLongitud.setText("");      
     }//GEN-LAST:event_jbnAgregarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         
-        for (int i = 0; i < lista.size(); i++) {
-            
-            if (Entidad == lista.get(i).getEntidad()) {
-                
-            lista.remove(i);
-            }
-            
+        int fila_seleccionada =tableDatos.getSelectedRow();
+        if(fila_seleccionada>=0){
+            model.removeRow(fila_seleccionada);
+        }else{
+            JOptionPane.showMessageDialog(null, "Selecione una fila por favor");
         }
-        //Actualizacion de TablaBase
-        String matris [][]=new String [lista.size()][5];
-        
-        for (int i = 0; i < lista.size(); i++) {
-            //matris[i][0]=lista.get(i).hashCode(id);
-            matris[i][1]=lista.get(i).getEntidad();
-            matris[i][2]=lista.get(i).getAtributo();
-            matris[i][3]=lista.get(i).getTipoDato();
-            matris[i][4]=lista.get(i).getLongitud();
-            
-        }
-        jTableBase.setModel(new javax.swing.table.DefaultTableModel(
-            matris,
-            new String [] {
-                "Id", "Entidad", "Atributo", "Tipo de Dato", "Longitud"
-            }
-        ));
-        
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnEliminarBaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarBaseActionPerformed
+        // TODO add your handling code here:
+        int eliminar_todo=tableDatos.getRowCount();
+        for (int i = eliminar_todo-1; i >=0; i--) {
+            model.removeRow(i);
+        }
+    }//GEN-LAST:event_btnEliminarBaseActionPerformed
+
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void tableDatosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableDatosMouseClicked
+        // TODO add your handling code here:
+        int fila_seleccionada=tableDatos.getSelectedRow();
+        txtId.setText(tableDatos.getValueAt(fila_seleccionada, 0).toString());
+        txtEntidad.setText(tableDatos.getValueAt(fila_seleccionada, 1).toString());
+        txtAtributo.setText(tableDatos.getValueAt(fila_seleccionada, 2).toString());
+       datos.setSelectedItem(tableDatos.getValueAt(fila_seleccionada, 3).toString());
+        txtLongitud.setText(tableDatos.getValueAt(fila_seleccionada, 4).toString());
+    }//GEN-LAST:event_tableDatosMouseClicked
 
     
     /**
@@ -311,17 +352,20 @@ public class JFrameBase extends javax.swing.JFrame {
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnEliminarBase;
     private javax.swing.JButton btnModificar;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JButton btnSalir;
+    private javax.swing.JComboBox<String> datos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JLabel jblId;
     private javax.swing.JButton jbnAgregar;
     private javax.swing.JLabel jlbAtributo;
     private javax.swing.JLabel jlbEntidad;
     private javax.swing.JLabel jlbLongitud;
     private javax.swing.JLabel jlbTipoDato;
+    private javax.swing.JTable tableDatos;
     private javax.swing.JTextField txtAtributo;
     private javax.swing.JTextField txtEntidad;
+    private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtLongitud;
     // End of variables declaration//GEN-END:variables
 }
