@@ -58,7 +58,7 @@
                               <Component id="jScrollPane1" min="-2" pref="503" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace pref="13" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="32767" attributes="0"/>
@@ -76,26 +76,6 @@
                       </Group>
                   </Group>
               </Group>
-          </Group>
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="87" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="jlbModTipoDato" pref="127" max="32767" attributes="0"/>
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
-                      <Component id="jlbModAtributo" max="32767" attributes="0"/>
-                  </Group>
-                  <Component id="jlbModLongitud" max="32767" attributes="0"/>
-              </Group>
-              <EmptySpace min="28" pref="28" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="comboBoxModDato" pref="111" max="32767" attributes="0"/>
-                  <Component id="txtModAtributo" alignment="0" max="32767" attributes="0"/>
-                  <Component id="txtModLongitud" max="32767" attributes="0"/>
-              </Group>
-              <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
-              <Component id="jButton1" min="-2" pref="145" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -146,23 +126,7 @@
                   <Component id="btnAgregar" pref="45" max="32767" attributes="0"/>
                   <Component id="btnModificar" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jlbModAtributo" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
-                  <Component id="txtModAtributo" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jlbModTipoDato" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
-                  <Component id="comboBoxModDato" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
               <EmptySpace max="32767" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jlbModLongitud" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
-                  <Component id="txtModLongitud" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jButton1" alignment="3" min="-2" pref="41" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -194,6 +158,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtAtributo">
+      <Events>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtAtributoKeyTyped"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JComboBox" name="comboBoxDato">
       <Properties>
@@ -210,11 +177,17 @@
           </StringArray>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="comboBoxDatoActionPerformed"/>
+      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JTextField" name="txtLongitud">
+      <Events>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtLongitudKeyTyped"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnAgregar">
       <Properties>
@@ -243,11 +216,11 @@
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
               <Table columnCount="5" rowCount="4">
-                <Column editable="true" title="Title 1" type="java.lang.Object"/>
+                <Column editable="true" title="Title 1" type="java.lang.Float"/>
                 <Column editable="true" title="Title 2" type="java.lang.Object"/>
                 <Column editable="true" title="Title 3" type="java.lang.Object"/>
                 <Column editable="true" title="Title 4" type="java.lang.Object"/>
-                <Column editable="true" title="Title 5" type="java.lang.Object"/>
+                <Column editable="true" title="Title 5" type="java.lang.Float"/>
               </Table>
             </Property>
             <Property name="rowHeight" type="int" value="30"/>
@@ -267,8 +240,19 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtEntidad">
+      <Events>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtEntidadKeyTyped"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="txtId">
+      <Properties>
+        <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+          <Color id="Cursor de Texto"/>
+        </Property>
+      </Properties>
+      <Events>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtIdKeyTyped"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnEliminarBase">
       <Properties>
@@ -292,52 +276,6 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSalirActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JLabel" name="jlbModAtributo">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Modificar Atributo:"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="jlbModTipoDato">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Modificar Tipo de Dato:"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="jlbModLongitud">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Modificar Longitud:"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JTextField" name="txtModAtributo">
-    </Component>
-    <Component class="javax.swing.JTextField" name="txtModLongitud">
-    </Component>
-    <Component class="javax.swing.JComboBox" name="comboBoxModDato">
-      <Properties>
-        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="8">
-            <StringItem index="0" value="Ingrese Dato"/>
-            <StringItem index="1" value="INT"/>
-            <StringItem index="2" value="LONG"/>
-            <StringItem index="3" value="STRING"/>
-            <StringItem index="4" value="DOUBLE"/>
-            <StringItem index="5" value="FLOAT"/>
-            <StringItem index="6" value="DATE"/>
-            <StringItem index="7" value="CHAR"/>
-          </StringArray>
-        </Property>
-      </Properties>
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-      </AuxValues>
-    </Component>
-    <Component class="javax.swing.JButton" name="jButton1">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Agregar Modificacion"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>
