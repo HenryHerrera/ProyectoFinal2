@@ -15,53 +15,16 @@ import javax.swing.table.DefaultTableModel;
 import Atributos.Atributos;
 import proyectof.Metodos;
 import Atributos.Atributos;
+import java.io.File;
+import java.util.Formatter;
 
 
 public class JFrameBase extends javax.swing.JFrame {
 
     DefaultTableModel model = new DefaultTableModel();
+    String barra = File.separator;
     
-    public void guardar(Atributos a){
-        model.addColumn(a);
-    }
-    
-    public void guardarBase(Atributos a){
-       try {
-           FileWriter fw= new FileWriter("Base.txt",true);
-           BufferedWriter bw = new BufferedWriter(fw);
-           PrintWriter pw = new PrintWriter(bw);
-           pw.print(a.getId());
-           pw.println(a.getEntidad());
-           pw.println(a.getNatributo());
-           pw.println(a.getTipoDato());
-           pw.println(a.getLongitud());
-           pw.close();
-       } catch (Exception e) {
-       }
-               
-   }
-   
-   public DefaultTableModel model(){
-    
-        this.model.addColumn("Id");
-        this.model.addColumn("Entidad");
-        this.model.addColumn("Atributo");
-        this.model.addColumn("Tipo de Dato");
-        this.model.addColumn("Longitud");
-    
-        try {
-           FileReader fr = new FileReader("Base.txt");
-           BufferedReader br = new BufferedReader(fr);
-           String a;
-           while((a=br.readLine())!=null){
-               StringTokenizer dato =new StringTokenizer(a);
-               while (dato.hasMoreTokens()) {
-               }
-           }
-       } catch (Exception e) {
-       }
-        return model;
-   }
+    String ubicacion= System.getProperty("user.dir"+barra+"Registros");
    
     public JFrameBase() {
         initComponents();
@@ -75,6 +38,32 @@ public class JFrameBase extends javax.swing.JFrame {
         this.tableDatos.setModel(model); 
     }
 
+    private void Agregar(){
+        String archivo = txtId.getText()+".registro";
+        File crear_ubicacion =new File(ubicacion);
+        File crear_archivo = new File(ubicacion+archivo);
+        
+        if (txtId.getText().equals("")) {
+            JOptionPane.showMessageDialog(rootPane, "No hay Archivo");
+            
+        } else {
+            try {
+                
+            if(crear_archivo.exists()){
+                JOptionPane.showMessageDialog(rootPane, "Archivo Existente");
+            }else{
+                crear_ubicacion.mkdir();
+                
+                Formatter crea = new Formatter(ubicacion+archivo);
+                crea.format("%s\r\n%s\r\n%s\r\n%s\r\n%s", "Id="+txtId.getText(),"Entidad"+txtEntidad.getText(),"Atributo"+txtAtributo.getText(),
+                        "Tipo de Dato"+comboBoxDato.getSelectedItem(),"Longitud"+txtLongitud.getText());
+                crea.close();
+                JOptionPane.showMessageDialog(rootPane, "Archivo Creado");
+            }
+            } catch (Exception e) {
+            }
+        }
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
